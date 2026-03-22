@@ -199,7 +199,7 @@ export default function AdminPage() {
                     <span className="pointer-events-none absolute left-4 text-[14px] font-medium text-[#6e6e73]">LKR</span>
                     <input
                       type="text"
-                      className="w-full rounded-xl bg-white py-3 pl-13 pr-12 text-[14px] font-medium text-[#1d1d1f] outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-black"
+                      className="w-full rounded-xl bg-white py-3 pl-13 pr-12 text-[14px] font-medium text-[#1d1d1f] border border-black/10 outline-none focus:border-black focus:ring-1 focus:ring-black"
                       value={formData.salary === "Negotiable" ? "" : formData.salary.replace(/^LKR\s*/i, "").replace(/\/?\s*mo$/i, "").trim()}
                       onChange={e => setFormData({...formData, salary: e.target.value ? `LKR ${e.target.value}/mo` : "Negotiable"})}
                     />
@@ -212,7 +212,7 @@ export default function AdminPage() {
                   <label className="text-[13px] font-medium text-[#6e6e73]">Tags (Comma separated)</label>
                   <input
                     type="text"
-                    className="w-full rounded-xl bg-white px-4 py-3 text-[14px] font-medium text-[#1d1d1f] outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-black"
+                    className="w-full rounded-xl bg-white px-4 py-3 text-[14px] font-medium text-[#1d1d1f] border border-black/10 outline-none focus:border-black focus:ring-1 focus:ring-black"
                     value={formData.tags.join(", ")}
                     onChange={handleTagsChange}
                   />
@@ -222,7 +222,7 @@ export default function AdminPage() {
                   <label className="text-[13px] font-medium text-[#6e6e73]">Description</label>
                   <textarea
                     rows={4}
-                    className="w-full resize-y rounded-xl bg-white px-4 py-3 text-[14px] leading-relaxed text-[#1d1d1f] outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-black"
+                    className="w-full resize-y rounded-xl bg-white px-4 py-3 text-[14px] leading-relaxed text-[#1d1d1f] border border-black/10 outline-none focus:border-black focus:ring-1 focus:ring-black"
                     value={formData.description}
                     onChange={e => setFormData({...formData, description: e.target.value})}
                     required
@@ -233,7 +233,7 @@ export default function AdminPage() {
                   <label className="text-[13px] font-medium text-[#6e6e73]">Apply Link</label>
                   <input
                     type="text"
-                    className="w-full rounded-xl bg-white px-4 py-3 text-[14px] font-medium text-[#1d1d1f] outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-black"
+                    className="w-full rounded-xl bg-white px-4 py-3 text-[14px] font-medium text-[#1d1d1f] border border-black/10 outline-none focus:border-black focus:ring-1 focus:ring-black"
                     value={formData.applyLink}
                     onChange={e => setFormData({...formData, applyLink: e.target.value})}
                     onBlur={e => {
@@ -337,7 +337,7 @@ function Input({ label, className = "", ...props }: React.InputHTMLAttributes<HT
     <div className={`flex flex-col gap-1.5 ${className}`}>
       <label className="text-[13px] font-medium text-[#6e6e73]">{label}</label>
       <input
-        className="w-full rounded-xl bg-white px-4 py-3 text-[14px] font-medium text-[#1d1d1f] outline-none ring-1 ring-black/10 focus:ring-2 focus:ring-black"
+        className="w-full rounded-xl bg-white px-4 py-3 text-[14px] font-medium text-[#1d1d1f] border border-black/10 outline-none focus:border-black focus:ring-1 focus:ring-black"
         {...props}
       />
     </div>
