@@ -44,7 +44,7 @@ export function JobClient({ job }: { job: Job }) {
   const shareParams = new URLSearchParams({ text: shareText });
   const shareLink = `https://api.whatsapp.com/send?${shareParams.toString()}`;
 
-  const applyText = `Hello! I would like to apply for the "${job.title}" position at ${job.company}.\n\nJob link: ${currentUrl}`;
+  const applyText = `Hello! I would like to apply for the "${job.title}" position at ${job.company}.`;
   let smartApplyLink = job.applyLink;
 
   if (job.applyLink.startsWith("https://wa.me/")) {

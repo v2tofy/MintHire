@@ -46,6 +46,7 @@ export default function AdminPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isEditing, setIsEditing] = useState<Job | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [tagsInput, setTagsInput] = useState("");
 
   // Default empty form
   const emptyJob: Omit<Job, "id"> = { title: "", company: "", salary: "Negotiable", location: "", tags: [], description: "", applyLink: "" };
@@ -85,7 +86,9 @@ export default function AdminPage() {
     const isUpdate = !!isEditing;
     const url = "/api/jobs";
     const method = isUpdate ? "PUT" : "POST";
-    const payload = isUpdate ? { ...formData, id: isEditing.id } : formData;
+    const normalizedTags = tagsInput.split(",").map((tag) => tag.trim()).filter((tag) => tag);
+    const payloadBase = { ...formData, tags: normalizedTags };
+    const payload = isUpdate ? { ...payloadBase, id: isEditing.id } : payloadBase;
 
     const res = await fetch(url, {
       method,
@@ -97,6 +100,7 @@ export default function AdminPage() {
       setIsEditing(null);
       setIsAdding(false);
       setFormData(emptyJob);
+      setTagsInput("");
       fetchJobs();
     }
   };
@@ -104,17 +108,21 @@ export default function AdminPage() {
   const openEdit = (job: Job) => {
     setIsEditing(job);
     setFormData({ ...job });
+    setTagsInput(job.tags.join(", "));
     setIsAdding(false);
   };
 
   const openAdd = () => {
     setIsAdding(true);
     setFormData({ ...emptyJob });
+    setTagsInput("");
     setIsEditing(null);
   };
 
   const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tags = e.target.value.split(",").map(t => t.trim()).filter(t => t);
+    const raw = e.target.value;
+    setTagsInput(raw);
+    const tags = raw.split(",").map((t) => t.trim()).filter((t) => t);
     setFormData({ ...formData, tags });
   };
 
@@ -213,7 +221,7 @@ export default function AdminPage() {
                   <input
                     type="text"
                     className="w-full rounded-xl bg-white px-4 py-3 text-[14px] font-medium text-[#1d1d1f] border border-black/10 outline-none focus:border-black focus:ring-2 focus:ring-black"
-                    value={formData.tags.join(", ")}
+                    value={tagsInput}
                     onChange={handleTagsChange}
                   />
                 </div>
@@ -267,7 +275,7 @@ export default function AdminPage() {
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-end">
                 <button
                   type="button"
-                  onClick={() => { setIsEditing(null); setIsAdding(false); }}
+                  onClick={() => { setIsEditing(null); setIsAdding(false); setTagsInput(""); }}
                   className="rounded-full bg-white px-6 py-3 text-[14px] font-medium text-[#1d1d1f] shadow-xs outline-none ring-1 ring-black/10 transition-colors hover:bg-[#f0f0f0]"
                 >
                   Cancel
