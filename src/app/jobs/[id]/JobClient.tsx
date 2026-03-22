@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 type Job = {
   id: string;
@@ -15,27 +14,9 @@ type Job = {
 };
 
 export function JobClient({ job }: { job: Job }) {
-  const [currentUrl, setCurrentUrl] = useState<string>("");
-
-  useEffect(() => {
-    setCurrentUrl(window.location.href);
-  }, []);
-
-  const quickTags = job.tags.slice(0, 3).join(" | ");
 
   const shareText = [
-    "*New Job Opportunity*",
-    `${job.title}`,
-    `${job.company}`,
-    "",
-    `Location: ${job.location}`,
-    `Salary: ${job.salary || "Negotiable"}`,
-    quickTags ? `Tags: ${quickTags}` : "",
-    "",
-    "*Apply:*",
-    currentUrl,
-    "",
-    "More verified job updates:",
+    "Join our WhatsApp group for daily verified job updates.",
     "https://chat.whatsapp.com/IjOQ9hb99BaLNhmil4SAIJ",
   ]
     .filter(Boolean)

@@ -15,12 +15,31 @@ export type NewJob = Omit<Job, "id">;
 
 let initPromise: Promise<void> | null = null;
 
-const connectionString =
+const rawConnectionString =
   process.env.DATABASE_URL ?? process.env.POSTGRES_URL ?? process.env.PRISMA_DATABASE_URL;
 
-if (!connectionString) {
+if (!rawConnectionString) {
   throw new Error("Missing database connection string. Set DATABASE_URL in environment variables.");
 }
+
+function normalizeConnectionString(input: string): string {
+  try {
+    const url = new URL(input);
+    const sslMode = url.searchParams.get("sslmode");
+    const hasCompatFlag = url.searchParams.has("uselibpqcompat");
+
+    if (!hasCompatFlag && (sslMode === "require" || sslMode === "prefer" || sslMode === "verify-ca")) {
+      url.searchParams.set("uselibpqcompat", "true");
+      return url.toString();
+    }
+
+    return input;
+  } catch {
+    return input;
+  }
+}
+
+const connectionString = normalizeConnectionString(rawConnectionString);
 
 const globalForPool = globalThis as typeof globalThis & {
   jobsDbPool?: Pool;
