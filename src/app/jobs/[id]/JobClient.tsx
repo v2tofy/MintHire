@@ -190,6 +190,13 @@ export function JobClient({ job }: { job: Job }) {
             </svg>
           </a>
         </motion.div>
+
+        {/* Minimal Card Footer */}
+        <motion.div variants={itemVariants} className="mt-6 sm:mt-8 flex items-center justify-center border-t border-black/6 pt-5">
+          <p className="text-[12px] font-medium tracking-tight text-[#86868b]">
+            Powered by <span className="font-semibold text-[#1d1d1f]">MintHire</span>
+          </p>
+        </motion.div>
       </motion.article>
     </main>
   );
