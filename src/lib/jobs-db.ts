@@ -71,10 +71,6 @@ function normalizeRow(row: Record<string, unknown>): Job {
   };
 }
 
-async function seedIfEmpty() {
-  return;
-}
-
 export async function initJobsTable() {
   if (!initPromise) {
     initPromise = (async () => {
@@ -92,8 +88,6 @@ export async function initJobsTable() {
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
       `);
-
-      await seedIfEmpty();
     })();
   }
 
